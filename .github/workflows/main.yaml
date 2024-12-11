@@ -8,13 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      
       - name: fetch repository
         uses: actions/checkout@v4
       - name: install nodejs
         uses: actions/setup-node@v4
+      - name: configure cache
+        uses: actions/cache@v3
+        with:
+          keys: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          path: .npm
       - name: install dependencies
-        run: |
-          pwd
-          ls
-          npm install
+        run: npm ci --cache install .npm --prefer-offline
+        
