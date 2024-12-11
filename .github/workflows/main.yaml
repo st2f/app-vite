@@ -1,4 +1,4 @@
-name: workflow vite
+name: workflow with vite
 on: 
   push:
     branches:
