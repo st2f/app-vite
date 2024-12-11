@@ -16,7 +16,7 @@ jobs:
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          path: ~/.npm
+          path: /home/running/.npm
       - name: install dependencies
-        run: npm ci --cache install .npm --prefer-offline
+        run: npm ci --cache install /home/running/.npm --prefer-offline
         
