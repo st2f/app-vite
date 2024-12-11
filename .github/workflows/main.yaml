@@ -1,0 +1,20 @@
+name: workflow with vite
+on: 
+  push:
+    branches:
+      - main
+      
+defaults:
+  run:
+    working-directory: ./app-vite
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install nodejs
+        uses: actions/setup-node@v4
+      - name: fetch repository
+        uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm install
