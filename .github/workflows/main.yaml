@@ -13,9 +13,7 @@ jobs:
       - name: Get npm cache directory
         id: npm-cache-dir
         shell: bash
-        run: |
-          echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-          exit(1)
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
       - name: fetch repository
         uses: actions/checkout@v4
       - name: configure cache
