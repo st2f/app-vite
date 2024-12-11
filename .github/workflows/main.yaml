@@ -29,5 +29,8 @@ jobs:
           #  ${{ runner.os }}-node-
 
       - name: install dependencies
-        run: npm ci --cache install ${{ steps.npm-cache-dir.dir }} #--prefer-offline
+        run: npm ci --cache install ${{ steps.npm-cache-dir.outputs.dir }} #--prefer-offline
+
+      - run: echo cache is hit
+        if: steps.npm-cache.outputs.cache-hit == 'true'
         
