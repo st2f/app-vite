@@ -29,5 +29,5 @@ jobs:
         uses: actions/checkout@v4
         
       - name: install dependencies
-        run: npm ci --cache install /home/running/.npm --prefer-offline
+        run: npm ci --cache install ${{ steps.npm-cache-dir.dir }} #--prefer-offline
         
