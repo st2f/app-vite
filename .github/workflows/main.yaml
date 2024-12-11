@@ -10,22 +10,24 @@ jobs:
     steps:
       - name: install nodejs
         uses: actions/setup-node@v4
+      
       - name: Get npm cache directory
         id: npm-cache-dir
         shell: bash
         run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-      - name: fetch repository
-        uses: actions/checkout@v4
+      
       - name: configure cache
         uses: actions/cache@v4
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          path: /home/running/.npm
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: fetch repository
+        uses: actions/checkout@v4
         
       - name: install dependencies
-        run: |
-          cachedPath=$(pnpm store path --silent)
-          echo "cached path is $cachedPath"
-          [ -d "$cachedPath" ] && echo "Directory $cachedPath exists."
-        #run: npm ci --cache install /home/running/.npm --prefer-offline
+        run: npm ci --cache install /home/running/.npm --prefer-offline
         
