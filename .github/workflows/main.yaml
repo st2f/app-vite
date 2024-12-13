@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-job:
     runs-on: ubuntu-latest
     steps:
       - name: install nodejs
@@ -20,5 +20,20 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
       - name: install dependencies
         working-directory: ./
-        run: npm ci --cache install ./npm --prefer-offline
-        
+        run: npm ci --cache install .npm --prefer-offline
+      - name: build app
+        working-directory: ./
+        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vite-build
+          path: ./dist
+
+  deploy-job:
+    needs: build-job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vite-build
+          path: ./build
