@@ -37,3 +37,6 @@ jobs:
         with:
           name: vite-build
           path: ./build
+      - run: |
+          ls
+          ls ./build
