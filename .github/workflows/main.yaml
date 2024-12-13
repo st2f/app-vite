@@ -21,13 +21,15 @@ jobs:
         
       - name: configure cache
         uses: actions/cache@v4
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        id: npm-cache 
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          #restore-keys: |
-          #  ${{ runner.os }}-node-
+          #path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ./
+          #key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}
 
       - name: install dependencies
-        run: npm ci --cache install ${{ steps.npm-cache-dir.dir }} #--prefer-offline
+        working-directory: ./
+        #run: npm ci --cache install ${{ steps.npm-cache-dir.dir }} #--prefer-offline
+        run: npm ci --cache install ./npm #--prefer-offline
         
