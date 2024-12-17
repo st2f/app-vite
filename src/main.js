@@ -2,6 +2,9 @@ import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
+import { speechToText } from './speech.js'
+
+
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -18,7 +21,19 @@ document.querySelector('#app').innerHTML = `
     <p class="read-the-docs">
       Click on the Vite logo to learn more
     </p>
+    
+    <div class="card">
+      <button id="speak" type="button">Speak</button>
+    </div>
+    <p class="hints"></p>
+    <div>
+        <p class="output"><em>...diagnostic messages</em></p>
+    </div>
+    
   </div>
 `
 
 setupCounter(document.querySelector('#counter'))
+speechToText(document.querySelector('#speak'))
+()
+
